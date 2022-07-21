@@ -1393,6 +1393,7 @@ MonoBehaviour:
   panelBlock: {fileID: 2033461110}
   gameOverScreen: {fileID: 1672421595}
   moneyText: {fileID: 1308625932}
+  shopScreen: {fileID: 2136436478}
   chunks:
   - {fileID: 2109644991456324497, guid: f49ba87a73a01bb4286c234349f1aaa9, type: 3}
   - {fileID: 43197870730370995, guid: ef4116ac9b4a44e4db16b18c40dcffee, type: 3}

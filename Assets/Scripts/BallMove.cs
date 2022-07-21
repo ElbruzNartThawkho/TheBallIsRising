@@ -25,23 +25,23 @@ public class BallMove : MonoBehaviour
         sound=PlayerPrefs.GetInt("SOUND"); vibrate=PlayerPrefs.GetInt("VIBRATE");
         if (sound == 0)
         {
-            soundOn.SetActive(true);
-            soundOff.SetActive(false);
-        }
-        else
-        {
             soundOn.SetActive(false);
             soundOff.SetActive(true);
         }
-        if(vibrate == 0)
-        {
-            vibrateOn.SetActive(true);
-            vibrateOff.SetActive(false);
-        }
         else
+        {
+            soundOn.SetActive(true);
+            soundOff.SetActive(false);
+        }
+        if(vibrate == 0)
         {
             vibrateOn.SetActive(false);
             vibrateOff.SetActive(true);
+        }
+        else
+        {
+            vibrateOn.SetActive(true);
+            vibrateOff.SetActive(false);
         }
     }
     void Update()

@@ -9,7 +9,7 @@ public class Shop : MonoBehaviour
     [SerializeField] List<GameObject> TickList;
     public string OwnMaterialInformation="Yellow ";
     public string[] MatArray = new string[6];
-    private void Awake()
+    public void Awake()
     {
         OwnMaterialInformation += GetMaterialPrefs();
         SetMaterialPrefs();

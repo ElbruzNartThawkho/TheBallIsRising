@@ -7,7 +7,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject start, finish, currentLvlGO, nextLvlGO, levelProgressBar, levelCompleteScreen, ball, panelBlock, gameOverScreen, moneyText;
+    [SerializeField] GameObject start, finish, currentLvlGO, nextLvlGO, levelProgressBar, levelCompleteScreen, ball, panelBlock, gameOverScreen, moneyText, shopScreen;
     
     [SerializeField] List<GameObject> chunks;
     Vector3 placeTransform;
@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
+        shopScreen.GetComponent<Shop>().Awake();
         deathCount = GetDeathCount();
         deathCount++;
         SetDeathCount();
