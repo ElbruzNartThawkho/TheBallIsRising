@@ -248,7 +248,7 @@ PlayerSettings:
   useCustomBaseGradleTemplate: 0
   useCustomGradlePropertiesTemplate: 0
   useCustomProguardFile: 0
-  AndroidTargetArchitectures: 1
+  AndroidTargetArchitectures: 3
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
@@ -818,10 +818,28 @@ PlayerSettings:
   webGLMemoryLinearGrowthStep: 16
   webGLMemoryGeometricGrowthStep: 0.2
   webGLMemoryGeometricGrowthCap: 96
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Android: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    CloudRendering: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    EmbeddedLinux: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    GameCoreScarlett: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    GameCoreXboxOne: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    Lumin: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    Nintendo Switch: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    PS4: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    PS5: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    QNX: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    Stadia: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    Standalone: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    WebGL: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    Windows Store Apps: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    XboxOne: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    iPhone: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
+    tvOS: EASY_MOBILE;EASY_MOBILE_PRO;EM_ADMOB
   additionalCompilerArguments: {}
   platformArchitecture: {}
-  scriptingBackend: {}
+  scriptingBackend:
+    Android: 0
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   managedStrippingLevel: {}

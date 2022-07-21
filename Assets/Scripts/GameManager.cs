@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using EasyMobile;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        RuntimeManager.Init();
         LevelCreate();
         levelProgressBar.GetComponent<Slider>().maxValue = GameObject.FindWithTag("Finish").transform.position.y;
         levelProgressBar.GetComponent<Slider>().minValue = start.transform.position.y;
@@ -54,7 +56,7 @@ public class GameManager : MonoBehaviour
         
         if (deathCount % 4 == 0&& deathCount!=0)
         {
-            
+            Advertising.ShowInterstitialAd();
         }
         panelBlock.SetActive(true);
         gameOverScreen.SetActive(true);
@@ -100,5 +102,25 @@ public class GameManager : MonoBehaviour
     {
         ball.GetComponent<BallMove>().SetSoundandVibration();
         SceneManager.LoadScene("Main");
+    }
+
+    public void Rewarded()
+    {
+        
+        Advertising.ShowRewardedAd();
+        
+    }
+    private void OnEnable()
+    {
+        Advertising.RewardedAdCompleted += Reward;
+    }
+    private void OnDisable()
+    {
+        Advertising.RewardedAdCompleted -= Reward;
+    }
+    private void Reward(RewardedAdNetwork arg1, AdPlacement arg2)
+    {
+        money += 50;
+        SetCash();
     }
 }
