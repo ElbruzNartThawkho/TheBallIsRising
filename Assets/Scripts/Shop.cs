@@ -14,13 +14,16 @@ public class Shop : MonoBehaviour
         OwnMaterialInformation += GetMaterialPrefs();
         SetMaterialPrefs();
         MaterialControl();
-        TickControl(0);
+        TickControl(PlayerPrefs.GetInt("LastSelect"));
+    }
+    public void SetLastSelect(int lastSelect)
+    {
+        PlayerPrefs.SetInt("LastSelect", lastSelect);
     }
     public void TickControl(int Number)
     {
         if (ObsList[Number].activeSelf == false)
         {
-            Debug.Log("cc");
             foreach (GameObject tick in TickList)
             {
                 tick.SetActive(false);
@@ -32,31 +35,31 @@ public class Shop : MonoBehaviour
                 {
                     case 0:
                         ball.GetComponent<Renderer>().material.color = Color.yellow;
-                        ballTrail.SetActive(true); redMaterial.SetActive(false);
+                        ballTrail.SetActive(true); redMaterial.SetActive(false); SetLastSelect(Number);
                         break;
                     case 1:
                         ball.GetComponent<Renderer>().material.color = Color.red;
-                        ballTrail.SetActive(false);redMaterial.SetActive(true);
+                        ballTrail.SetActive(false);redMaterial.SetActive(true); SetLastSelect(Number);
                         break;
                     case 2:
                         ball.GetComponent<Renderer>().material.color = Color.blue;
                         ballTrail.GetComponent<TrailRenderer>().startColor = Color.blue;
-                        ballTrail.SetActive(true); redMaterial.SetActive(false);
+                        ballTrail.SetActive(true); redMaterial.SetActive(false); SetLastSelect(Number);
                         break;
                     case 3:
                         ball.GetComponent<Renderer>().material.color = Color.green;
                         ballTrail.GetComponent<TrailRenderer>().startColor = Color.green;
-                        ballTrail.SetActive(true); redMaterial.SetActive(false);
+                        ballTrail.SetActive(true); redMaterial.SetActive(false); SetLastSelect(Number);
                         break;
                     case 4:
                         ball.GetComponent<Renderer>().material.color = Color.gray;
                         ballTrail.GetComponent<TrailRenderer>().startColor = Color.gray;
-                        ballTrail.SetActive(true); redMaterial.SetActive(false);
+                        ballTrail.SetActive(true); redMaterial.SetActive(false); SetLastSelect(Number);
                         break;
                     case 5:
                         ball.GetComponent<Renderer>().material.color = Color.magenta;
                         ballTrail.GetComponent<TrailRenderer>().startColor = Color.magenta;
-                        ballTrail.SetActive(true); redMaterial.SetActive(false);
+                        ballTrail.SetActive(true); redMaterial.SetActive(false); SetLastSelect(Number);
                         break;
                 }
             }
