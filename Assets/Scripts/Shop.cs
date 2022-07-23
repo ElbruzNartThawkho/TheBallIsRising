@@ -129,7 +129,7 @@ public class Shop : MonoBehaviour
         {
             if (status == false)
             {
-                gm.GetComponent<GameManager>().money -= 0;
+                gm.GetComponent<GameManager>().money -= price;
                 gm.GetComponent<GameManager>().SetCash();
                 status = true;
             }

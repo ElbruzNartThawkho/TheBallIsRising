@@ -15,6 +15,10 @@ public class ShopInventory
 }
 public class JsonSave : MonoBehaviour
 {
+    private void Awake()
+    {
+        Debug.Log(Application.persistentDataPath);
+    }
     public void Save(ShopInventory ýnventory)
     {
         string shopInventoryJsonFormat = JsonUtility.ToJson(ýnventory);//json convert
