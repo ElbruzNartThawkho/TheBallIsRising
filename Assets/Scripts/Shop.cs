@@ -7,18 +7,29 @@ public class Shop : MonoBehaviour
     [SerializeField] GameObject gm, ball,ballTrail,redMaterial;
     [SerializeField] List<GameObject> ObsList;
     [SerializeField] List<GameObject> TickList;
-    public string OwnMaterialInformation="Yellow ";
-    public string[] MatArray = new string[6];
+    JsonSave jsonSave;
+    ShopInventory inventory = new ShopInventory();
+    int joinCount = 0;
     public void Awake()
     {
-        OwnMaterialInformation += GetMaterialPrefs();
-        SetMaterialPrefs();
+        jsonSave = GetComponent<JsonSave>();
+        joinCount = PlayerPrefs.GetInt("Join");
+        if(joinCount == 0)
+        {
+            inventory.yellow = true;
+            inventory.red = false;
+            inventory.blue = false;
+            inventory.green = false;
+            inventory.gray = false;
+            inventory.pink = false;
+            inventory.lastSelect = 0;
+            jsonSave.Save(inventory);
+            joinCount++;
+            PlayerPrefs.SetInt("Join", joinCount);
+        }
+        inventory = jsonSave.Load();
         MaterialControl();
-        TickControl(PlayerPrefs.GetInt("LastSelect"));
-    }
-    public void SetLastSelect(int lastSelect)
-    {
-        PlayerPrefs.SetInt("LastSelect", lastSelect);
+        TickControl(inventory.lastSelect);
     }
     public void TickControl(int Number)
     {
@@ -29,110 +40,100 @@ public class Shop : MonoBehaviour
                 tick.SetActive(false);
             }
             TickList[Number].SetActive(true);
-            for (int i = 0; i < TickList.Count; i++)
+            switch (Number)
             {
-                switch (Number)
-                {
-                    case 0:
-                        ball.GetComponent<Renderer>().material.color = Color.yellow;
-                        ballTrail.SetActive(true); redMaterial.SetActive(false); SetLastSelect(Number);
-                        break;
-                    case 1:
-                        ball.GetComponent<Renderer>().material.color = Color.red;
-                        ballTrail.SetActive(false);redMaterial.SetActive(true); SetLastSelect(Number);
-                        break;
-                    case 2:
-                        ball.GetComponent<Renderer>().material.color = Color.blue;
-                        ballTrail.GetComponent<TrailRenderer>().startColor = Color.blue;
-                        ballTrail.SetActive(true); redMaterial.SetActive(false); SetLastSelect(Number);
-                        break;
-                    case 3:
-                        ball.GetComponent<Renderer>().material.color = Color.green;
-                        ballTrail.GetComponent<TrailRenderer>().startColor = Color.green;
-                        ballTrail.SetActive(true); redMaterial.SetActive(false); SetLastSelect(Number);
-                        break;
-                    case 4:
-                        ball.GetComponent<Renderer>().material.color = Color.gray;
-                        ballTrail.GetComponent<TrailRenderer>().startColor = Color.gray;
-                        ballTrail.SetActive(true); redMaterial.SetActive(false); SetLastSelect(Number);
-                        break;
-                    case 5:
-                        ball.GetComponent<Renderer>().material.color = Color.magenta;
-                        ballTrail.GetComponent<TrailRenderer>().startColor = Color.magenta;
-                        ballTrail.SetActive(true); redMaterial.SetActive(false); SetLastSelect(Number);
-                        break;
-                }
+                case 0:
+                    ball.GetComponent<Renderer>().material.color = Color.yellow;
+                    ballTrail.SetActive(true); redMaterial.SetActive(false);
+                    break;
+                case 1:
+                    ball.GetComponent<Renderer>().material.color = Color.red;
+                    ballTrail.SetActive(false); redMaterial.SetActive(true);
+                    break;
+                case 2:
+                    ball.GetComponent<Renderer>().material.color = Color.blue;
+                    ballTrail.GetComponent<TrailRenderer>().startColor = Color.blue;
+                    ballTrail.SetActive(true); redMaterial.SetActive(false);
+                    break;
+                case 3:
+                    ball.GetComponent<Renderer>().material.color = Color.green;
+                    ballTrail.GetComponent<TrailRenderer>().startColor = Color.green;
+                    ballTrail.SetActive(true); redMaterial.SetActive(false);
+                    break;
+                case 4:
+                    ball.GetComponent<Renderer>().material.color = Color.gray;
+                    ballTrail.GetComponent<TrailRenderer>().startColor = Color.gray;
+                    ballTrail.SetActive(true); redMaterial.SetActive(false);
+                    break;
+                case 5:
+                    ball.GetComponent<Renderer>().material.color = Color.magenta;
+                    ballTrail.GetComponent<TrailRenderer>().startColor = Color.magenta;
+                    ballTrail.SetActive(true); redMaterial.SetActive(false);
+                    break;
             }
+            inventory.lastSelect = Number;
+            jsonSave.Save(inventory);
             MaterialControl();
         }
         
     }
-    public void moneybas()
+    public void MoneyBas()
     {
         gm.GetComponent<GameManager>().money += 1000;
         gm.GetComponent<GameManager>().SetCash();
     }
     public void MaterialControl()
     {
-        MatArray= OwnMaterialInformation.Split(' ');
-        foreach (string mat in MatArray)
-        {
-            Debug.Log(mat);
-            switch (mat)
-            {
-                case "Yellow":
-                    ObsList[0].SetActive(false);
-                    break;
-                case "Red":
-                    ObsList[1].SetActive(false);
-                    break;
-                case "Blue":
-                    ObsList[2].SetActive(false);
-                    break;
-                case "Green":
-                    ObsList[3].SetActive(false);
-                    break;
-                case "Orange":
-                    ObsList[4].SetActive(false);
-                    break;
-                case "Pink":
-                    ObsList[5].SetActive(false);
-                    break;
-            }
-        }
+        if (inventory.yellow)
+            ObsList[0].SetActive(false);
+        if (inventory.red)
+            ObsList[1].SetActive(false);
+        if (inventory.blue)
+            ObsList[2].SetActive(false);
+        if (inventory.green)
+            ObsList[3].SetActive(false);
+        if (inventory.gray)
+            ObsList[4].SetActive(false);
+        if (inventory.pink)
+            ObsList[5].SetActive(false);
     }
-    public void SetMaterialBuyPrefs(string matPrice)
+    public void SetMaterialBuyPrefs(int number)
     {
-        int price = int.Parse(matPrice.Split(' ')[1]);
-        string buyMat = matPrice.Split(' ')[0];
+        switch (number)
+        {
+            case 0:
+                inventory.yellow=PriceAndBuyControl(inventory.yellow, 0);
+                break;
+            case 1:
+                inventory.red = PriceAndBuyControl(inventory.red, 50);
+                break;
+            case 2:
+                inventory.blue = PriceAndBuyControl(inventory.blue, 100);
+                break;
+            case 3:
+                inventory.green = PriceAndBuyControl(inventory.green, 150);
+                break;
+            case 4:
+                inventory.gray = PriceAndBuyControl(inventory.gray, 200);
+                break;
+            case 5:
+                inventory.pink = PriceAndBuyControl(inventory.pink, 250);
+                break;
+        }
+        jsonSave.Save(inventory);
+        MaterialControl();
+    }
+    bool PriceAndBuyControl(bool status ,int price)
+    {
         if (gm.GetComponent<GameManager>().money >= price)
         {
-            bool control = false;
-            MatArray = OwnMaterialInformation.Split(' ');
-            foreach (string mat in MatArray)
+            if (status == false)
             {
-                if (mat == buyMat)
-                {
-                    control = true;
-                }
-            }
-            if (control == false)
-            {
-                gm.GetComponent<GameManager>().money -= price;
+                gm.GetComponent<GameManager>().money -= 0;
                 gm.GetComponent<GameManager>().SetCash();
-                OwnMaterialInformation += buyMat+" ";
+                status = true;
             }
-            PlayerPrefs.SetString("OwnMaterial", OwnMaterialInformation);
-            MaterialControl();
         }
-    }
-    public void SetMaterialPrefs()
-    {
-        PlayerPrefs.SetString("OwnMaterial", OwnMaterialInformation);
-    }
-    public string GetMaterialPrefs()
-    {
-
-        return PlayerPrefs.GetString("OwnMaterial");
+        return status;
     }
 }

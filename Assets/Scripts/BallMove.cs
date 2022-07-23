@@ -107,9 +107,10 @@ public class BallMove : MonoBehaviour
                 GetComponent<AudioSource>().clip = failSound;
                 GetComponent<AudioSource>().Play();
             }
-            if (vibrate == 0)
+            if (vibrate == 1)
             {
                 Handheld.Vibrate();
+                Debug.Log("Titredi");
             }
         }
     }
