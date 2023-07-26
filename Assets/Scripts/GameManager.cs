@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using EasyMobile;
+using UnityEngine.TextCore.Text;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,9 +14,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<GameObject> chunks;
     Vector3 placeTransform;
     public int currentLevel = 0, money = 0, deathCount = 0;
-    
+    public static GameManager instance;
     private void Awake()
     {
+        instance = this;
         shopScreen.GetComponent<Shop>().Awake();
         deathCount = GetDeathCount();
         deathCount++;
@@ -60,7 +62,7 @@ public class GameManager : MonoBehaviour
         }
         panelBlock.SetActive(true);
         gameOverScreen.SetActive(true);
-        ball.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        ball.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         ball.GetComponent<SphereCollider>().enabled = false;
     }
     public void SetCash()
@@ -101,9 +103,15 @@ public class GameManager : MonoBehaviour
     public void ReloadScene()
     {
         ball.GetComponent<BallMove>().SetSoundandVibration();
+        ball.transform.position = Vector3.zero;
+        ball.GetComponent<Rigidbody>().constraints -= RigidbodyConstraints.FreezePositionY;
+        ball.GetComponent<SphereCollider>().enabled = true;
+    }
+    public void NextScene()
+    {
+        ball.GetComponent<BallMove>().SetSoundandVibration();
         SceneManager.LoadScene("Main");
     }
-
     public void Rewarded()
     {
         

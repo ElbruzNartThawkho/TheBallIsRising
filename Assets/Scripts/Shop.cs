@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField] GameObject gm, ball,ballTrail,redMaterial;
+    GameManager gm;
+    [SerializeField] GameObject ball,ballTrail,redMaterial;
     [SerializeField] List<GameObject> ObsList;
     [SerializeField] List<GameObject> TickList;
     JsonSave jsonSave;
@@ -30,6 +31,10 @@ public class Shop : MonoBehaviour
         inventory = jsonSave.Load();
         MaterialControl();
         TickControl(inventory.lastSelect);
+    }
+    private void Start()
+    {
+        gm = GameManager.instance;
     }
     public void TickControl(int Number)
     {
@@ -79,8 +84,8 @@ public class Shop : MonoBehaviour
     }
     public void MoneyBas()
     {
-        gm.GetComponent<GameManager>().money += 1000;
-        gm.GetComponent<GameManager>().SetCash();
+        gm.money += 1000;
+        gm.SetCash();
     }
     public void MaterialControl()
     {
@@ -125,12 +130,12 @@ public class Shop : MonoBehaviour
     }
     bool PriceAndBuyControl(bool status ,int price)
     {
-        if (gm.GetComponent<GameManager>().money >= price)
+        if (gm.money >= price)
         {
             if (status == false)
             {
-                gm.GetComponent<GameManager>().money -= price;
-                gm.GetComponent<GameManager>().SetCash();
+                gm.money -= price;
+                gm.SetCash();
                 status = true;
             }
         }

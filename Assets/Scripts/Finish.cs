@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Finish : MonoBehaviour
 {
-    GameObject Gm;
-    private void Awake()
+    GameManager gm;
+    private void Start()
     {
-        Gm = GameObject.FindWithTag("GameController");
+        gm = GameManager.instance;
     }
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player")
         {
-            Gm.GetComponent<GameManager>().FinishLevel();
+            gm.FinishLevel();
         }
     }
 

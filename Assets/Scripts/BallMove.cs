@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class BallMove : MonoBehaviour
 {
-    GameObject Gm;
+    GameManager gm;
     public int vibrate = 1;
     public int sound = 1;
     public AudioClip jumpSound,failSound;
     [SerializeField] float jumpSpeed;
     [SerializeField] GameObject soundOff, vibrateOff,soundOn,vibrateOn;
     
-    private void Awake()
+    private void Start()
     {
         GetSoundandVibration();
-        Gm = GameObject.FindWithTag("GameController");
+        gm = GameManager.instance;
     }
     public void SetSoundandVibration()
     {
@@ -101,7 +101,7 @@ public class BallMove : MonoBehaviour
     {
         if(collision.gameObject.tag == "Respawn")
         {
-            Gm.GetComponent<GameManager>().GameOver();
+            gm.GameOver();
             if(sound == 1)
             {
                 GetComponent<AudioSource>().clip = failSound;
@@ -119,8 +119,8 @@ public class BallMove : MonoBehaviour
         if (other.gameObject.tag == "Goal")
         {
             other.gameObject.SetActive(false);
-            Gm.GetComponent<GameManager>().money++;
-            Gm.GetComponent<GameManager>().SetCash();
+            gm.money++;
+            gm.SetCash();
         }
     }
 }
