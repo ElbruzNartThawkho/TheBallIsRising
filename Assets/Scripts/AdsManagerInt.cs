@@ -14,7 +14,6 @@ public class AdsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
         if (Instance != null && Instance != this)
         {
             Destroy(this.gameObject);
