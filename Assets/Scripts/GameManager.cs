@@ -1,11 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
-using EasyMobile;
-using UnityEngine.TextCore.Text;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,7 +30,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        RuntimeManager.Init();
+        //RuntimeManager.Init();
         LevelCreate();
         levelProgressBar.GetComponent<Slider>().maxValue = GameObject.FindWithTag("Finish").transform.position.y;
         levelProgressBar.GetComponent<Slider>().minValue = start.transform.position.y;
@@ -58,8 +55,10 @@ public class GameManager : MonoBehaviour
         
         if (deathCount % 4 == 0&& deathCount!=0)
         {
-            Advertising.ShowInterstitialAd();
+            gameObject.GetComponent<AdsManager>().ShowAd();
+            //Advertising.ShowInterstitialAd();
         }
+        deathCount++;
         panelBlock.SetActive(true);
         gameOverScreen.SetActive(true);
         ball.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -114,19 +113,24 @@ public class GameManager : MonoBehaviour
     }
     public void Rewarded()
     {
-        
-        Advertising.ShowRewardedAd();
-        
+        gameObject.GetComponent<AdsManager>().ShowRewardedAd();
+        //Advertising.ShowRewardedAd();
+
     }
-    private void OnEnable()
-    {
-        Advertising.RewardedAdCompleted += Reward;
-    }
-    private void OnDisable()
-    {
-        Advertising.RewardedAdCompleted -= Reward;
-    }
-    private void Reward(RewardedAdNetwork arg1, AdPlacement arg2)
+    //private void OnEnable()
+    //{
+    //    Advertising.RewardedAdCompleted += Reward;
+    //}
+    //private void OnDisable()
+    //{
+    //    Advertising.RewardedAdCompleted -= Reward;
+    //}
+    //private void Reward(RewardedAdNetwork arg1, AdPlacement arg2)
+    //{
+    //    money += 50;
+    //    SetCash();
+    //}
+    public void RewAd()
     {
         money += 50;
         SetCash();
